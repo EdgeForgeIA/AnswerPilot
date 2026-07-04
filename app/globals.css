@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+/* ── Semantic tokens (light) ─────────────────────────────────────── */
+:root {
+  --canvas: #f4f6f8;
+  --surface: #ffffff;
+  --surface-raised: #fbfcfd;
+  --line: #e3e7ec;
+  --line-strong: #cfd6de;
+  --ink: #10151f;
+  --ink-soft: #5b6472;
+  --ink-faint: #8a93a1;
+  --accent: #0b7a6b;
+  --accent-strong: #085e53;
+  --accent-soft: #e0f2ee;
+  --on-accent: #ffffff;
+  --amber: #b45309;
+  --amber-soft: #fdf1e0;
+  --danger: #b42318;
+  --danger-soft: #fdeae8;
+  --shadow-card: 0 1px 2px rgb(16 21 31 / 0.05), 0 4px 16px -8px rgb(16 21 31 / 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #0b0e13;
+    --surface: #12161e;
+    --surface-raised: #171c26;
+    --line: #232a36;
+    --line-strong: #313b4b;
+    --ink: #edf1f6;
+    --ink-soft: #97a1b0;
+    --ink-faint: #6a7484;
+    --accent: #2fbba4;
+    --accent-strong: #4bd0ba;
+    --accent-soft: #123029;
+    --on-accent: #06251f;
+    --amber: #e0913a;
+    --amber-soft: #33230e;
+    --danger: #f0716a;
+    --danger-soft: #391512;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 16px -8px rgb(0 0 0 / 0.5);
+  }
+}
+
+/* Map tokens into Tailwind utilities (bg-canvas, text-ink, border-line…) */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-raised: var(--surface-raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --shadow-card: var(--shadow-card);
+}
+
+/* ── Base ─────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Eyebrow labels — the ledger vernacular used across the product */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Confidence "stamp" — dotted border like an audit stamp */
+.stamp {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px dashed currentColor;
+  border-radius: 3px;
+  padding: 2px 6px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* ── Hero demo animation ─────────────────────────────────────────── */
+@keyframes row-answer {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  8%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.demo-answer {
+  opacity: 0;
+  animation: row-answer 14s linear infinite;
+}
+
+.demo-caret {
+  animation: caret-blink 1s step-end infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .demo-answer {
+    animation: none;
+    opacity: 1;
+  }
+  .fade-up {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
