@@ -215,7 +215,7 @@ const STEPS = [
   },
   {
     title: "Paste in any questionnaire",
-    body: "Drop in the questions from that Excel file — one per line or as a CSV. AnswerPilot drafts every answer from your library, with citations and a confidence grade on each row.",
+    body: "Upload the .xlsx file the customer sent — AnswerPilot finds the question column automatically — or paste questions in directly. Every answer is drafted from your library, with citations and a confidence grade on each row.",
   },
   {
     title: "Review, approve, export",
@@ -276,8 +276,8 @@ const FEATURES = [
   },
   {
     icon: FileDown,
-    title: "Clean CSV export",
-    body: "Export question/answer pairs ready to paste back into whatever portal or spreadsheet the customer sent you.",
+    title: "Excel in, Excel out",
+    body: "Upload the customer's .xlsx questionnaire directly, and export a clean, review-ready .xlsx or CSV to send back or paste into their portal.",
   },
   {
     icon: ShieldCheck,
@@ -378,7 +378,7 @@ const FAQS = [
   },
   {
     q: "What formats can I import?",
-    a: "Paste questions one per line, or upload a .csv/.txt file. For your library, you can add entries one at a time or bulk-import a two-column CSV of question,answer pairs — most teams start by pasting answers from their last completed questionnaire.",
+    a: "Upload the .xlsx questionnaire your customer sent (the question column is detected automatically, cover sheets are skipped), upload a .csv/.txt, or paste questions one per line. For your library, add entries one at a time or bulk-import a two-column CSV — most teams start by pasting answers from their last completed questionnaire.",
   },
   {
     q: "Is our security data safe with you?",
@@ -444,6 +444,14 @@ function SiteFooter() {
     <footer className="border-t border-line">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 sm:flex-row">
         <Wordmark />
+        <nav className="flex items-center gap-5 text-xs font-medium text-ink-faint">
+          <Link href="/terms" className="hover:text-ink">
+            Terms
+          </Link>
+          <Link href="/privacy" className="hover:text-ink">
+            Privacy
+          </Link>
+        </nav>
         <p className="font-mono text-xs text-ink-faint">
           © {new Date().getFullYear()} AnswerPilot · Security questionnaires, answered.
         </p>

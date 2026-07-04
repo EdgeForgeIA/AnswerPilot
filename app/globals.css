@@ -183,3 +183,12 @@ body {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Legal document typography */
+.legal-doc h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; color: var(--color-ink); }
+.legal-doc .updated { margin-top: 0.4rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-faint); }
+.legal-doc h2 { margin-top: 2.25rem; font-size: 1.05rem; font-weight: 600; color: var(--color-ink); }
+.legal-doc p, .legal-doc li { margin-top: 0.75rem; font-size: 0.925rem; line-height: 1.7; color: var(--color-ink-soft); }
+.legal-doc ul { padding-left: 1.25rem; list-style: disc; }
+.legal-doc strong { color: var(--color-ink); }
+.legal-doc .placeholder { color: var(--color-amber); font-family: var(--font-mono); font-size: 0.85em; }

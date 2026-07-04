@@ -24,7 +24,7 @@ export const PLANS: Record<Plan, PlanConfig> = {
       "1 questionnaire (up to 20 questions)",
       "50 answer library entries",
       "AI drafts with confidence grading",
-      "CSV export",
+      "Excel (.xlsx) import & export",
     ],
   },
   pro: {
