@@ -1,8 +1,5 @@
 {
   "functions": {
-    "api/auth/**": { "maxDuration": 60 },
-    "auth/**": { "maxDuration": 60 },
-    "login": { "maxDuration": 60 },
-    "signup": { "maxDuration": 60 }
+    "**": { "maxDuration": 60 }
   }
 }
