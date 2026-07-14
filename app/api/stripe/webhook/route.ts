@@ -97,7 +97,18 @@ async function applySubscription(
   const plan = active ? planFromPriceId(item?.price?.id) : null;
   const periodEnd = item?.current_period_end;
 
-  await supabase
+  // An ACTIVE subscription whose price we don't recognize is a configuration
+  // error (STRIPE_PRICE_PRO / STRIPE_PRICE_SCALE don't match the live catalog).
+  // Fail loudly so Stripe shows a failed delivery and retries, instead of
+  // silently downgrading a paying customer to free.
+  if (active && !plan) {
+    throw new Error(
+      `Unrecognized price "${item?.price?.id}" on active subscription ${subscription.id}. ` +
+        `Check STRIPE_PRICE_PRO / STRIPE_PRICE_SCALE env vars against the Stripe product catalog.`
+    );
+  }
+
+  const { data, error } = await supabase
     .from("orgs")
     .update({
       plan: plan ?? "free",
@@ -105,5 +116,21 @@ async function applySubscription(
       subscription_status: subscription.status,
       current_period_end: periodEnd ? new Date(periodEnd * 1000).toISOString() : null,
     })
-    .eq("id", orgId);
+    .eq("id", orgId)
+    .select("id, plan");
+
+  // A database error OR zero matched rows both mean billing state was NOT
+  // synced — e.g. a bad SUPABASE_SERVICE_ROLE_KEY or a wrong org id. Returning
+  // 200 here would tell Stripe everything is fine while a customer's payment
+  // goes unhonored, so fail loudly instead.
+  if (error) {
+    throw new Error(`Database write failed while syncing org ${orgId}: ${error.message}`);
+  }
+  if (!data || data.length === 0) {
+    throw new Error(
+      `Billing sync matched no org row for id ${orgId} — check the service-role key and org metadata.`
+    );
+  }
+
+  console.log(`Billing synced: org ${orgId} → plan=${data[0].plan}, status=${subscription.status}`);
 }
