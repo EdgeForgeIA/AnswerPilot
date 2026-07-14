@@ -80,29 +80,64 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "No text content found in that workbook." }, { status: 422 });
   }
 
-  // Heuristic 1: header named like "question".
-  let chosen: { header: string; values: string[] } | undefined;
+  type Col = { header: string; values: string[] };
+
+  // Content check: do a column's values actually read like questions?
+  // Guards against label columns whose HEADER matches (e.g. "Control Domain").
+  function contentScore(col: Col): number {
+    return col.values.reduce((acc, v) => {
+      if (v.trim().endsWith("?")) return acc + 2;
+      if (v.length > 25 && /\b(do|does|is|are|how|describe|provide|have|what|list|state)\b/i.test(v))
+        return acc + 1;
+      return acc;
+    }, 0);
+  }
+  function looksLikeQuestions(col: Col): boolean {
+    if (col.values.length === 0) return false;
+    const avgLen = col.values.reduce((a, v) => a + v.length, 0) / col.values.length;
+    return avgLen >= 20 || contentScore(col) >= col.values.length * 0.25;
+  }
+
+  // Heuristic 1: header priority. "question" beats everything; weaker header
+  // words only count when the header isn't a classifier like "domain" or
+  // "category" — real questionnaires pair "Control Domain" WITH a question
+  // column, and the domain column must never win.
+  let chosen: Col | undefined;
   for (const col of columns.values()) {
-    if (/question|inquiry|control|requirement/i.test(col.header)) {
+    if (/question/i.test(col.header)) {
       chosen = col;
       break;
     }
   }
+  if (!chosen) {
+    for (const col of columns.values()) {
+      if (/inquiry|requirement|prompt/i.test(col.header) && !/domain|category|type|area|ref/i.test(col.header)) {
+        chosen = col;
+        break;
+      }
+    }
+  }
 
-  // Heuristic 2: most question-like content.
+  // Sanity gate: a header match whose CONTENT doesn't look like questions is
+  // rejected, and we fall through to content scoring across all columns.
+  if (chosen && !looksLikeQuestions(chosen)) {
+    chosen = undefined;
+  }
+
+  // Heuristic 2: most question-like content wins.
   if (!chosen) {
     let bestScore = -1;
     for (const col of columns.values()) {
-      const score = col.values.reduce((acc, v) => {
-        if (v.trim().endsWith("?")) return acc + 2;
-        if (v.length > 25 && /\b(do|does|is|are|how|describe|provide|have|what)\b/i.test(v))
-          return acc + 1;
-        return acc;
-      }, 0);
+      const score = contentScore(col);
       if (score > bestScore && col.values.length > 0) {
         bestScore = score;
         chosen = col;
       }
+    }
+    // Final gate: if even the best column doesn't look like questions,
+    // better an honest error than 30 rows of garbage.
+    if (chosen && !looksLikeQuestions(chosen)) {
+      chosen = undefined;
     }
   }
 
