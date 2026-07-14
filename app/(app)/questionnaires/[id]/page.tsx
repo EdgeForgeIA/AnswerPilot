@@ -6,6 +6,7 @@ import { getOrgContext } from "@/lib/data";
 import { formatDate } from "@/lib/utils";
 import { StatusBadge, Spinner } from "@/components/ui";
 import { ReviewWorkspace } from "@/components/review-workspace";
+import { DeleteQuestionnaireButton } from "@/components/delete-questionnaire-button";
 import type { KbEntry, Question, Questionnaire } from "@/types/db";
 
 export const metadata = { title: "Review questionnaire" };
@@ -51,6 +52,13 @@ export default async function QuestionnairePage({
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <h1 className="text-2xl font-bold tracking-tight text-ink">{questionnaire.name}</h1>
         <StatusBadge status={questionnaire.status} />
+        <DeleteQuestionnaireButton
+          id={questionnaire.id}
+          name={questionnaire.name}
+          questionCount={questionnaire.question_count}
+          redirectAfter
+          className="ml-auto"
+        />
       </div>
       <p className="mt-1 font-mono text-xs text-ink-faint">
         {questionnaire.question_count} questions · created {formatDate(questionnaire.created_at)}

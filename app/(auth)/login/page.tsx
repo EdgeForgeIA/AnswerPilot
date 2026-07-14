@@ -49,6 +49,11 @@ function LoginForm() {
           Log in
         </Button>
       </form>
+      <p className="mt-3 text-right text-sm">
+        <Link href="/forgot-password" className="font-medium text-ink-faint hover:text-ink">
+          Forgot password?
+        </Link>
+      </p>
       <p className="mt-5 text-center text-sm text-ink-soft">
         New here?{" "}
         <Link href="/signup" className="font-medium text-accent hover:underline">

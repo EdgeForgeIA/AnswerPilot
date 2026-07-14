@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { BookMarked, Plus, Search, Sparkles, Trash2, Upload, X } from "lucide-react";
@@ -21,6 +21,35 @@ export function LibraryManager({ initialEntries, kbLimit, planName }: Props) {
   const [mode, setMode] = useState<"none" | "add" | "import">("none");
   const [busy, setBusy] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const importFileRef = useRef<HTMLInputElement>(null);
+
+  async function onImportFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    setUploading(true);
+    try {
+      const body = new FormData();
+      body.append("file", file);
+      const res = await fetch("/api/library/import", { method: "POST", body });
+      const payload = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        toast.error(payload.error ?? "Could not import that file.");
+        return;
+      }
+      setEntries((prev) => [...(payload.entries as KbEntry[]), ...prev]);
+      toast.success(
+        `Imported ${payload.imported} entr${payload.imported === 1 ? "y" : "ies"} from ${payload.detail}.`
+      );
+      setMode("none");
+      router.refresh();
+    } catch {
+      toast.error("Could not import that file.");
+    } finally {
+      setUploading(false);
+    }
+  }
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -204,7 +233,21 @@ export function LibraryManager({ initialEntries, kbLimit, planName }: Props) {
               <X className="h-4 w-4" />
             </button>
           </div>
-          <form onSubmit={bulkImport} className="mt-4 space-y-4">
+          <div className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-dashed border-line-strong bg-raised/50 px-4 py-3">
+            <Upload className="h-4 w-4 text-ink-faint" aria-hidden />
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-medium text-ink">Upload a file</p>
+              <p className="text-xs text-ink-faint">
+                .csv (question,answer) or .xlsx — question and answer columns detected automatically.
+              </p>
+            </div>
+            <Button size="sm" variant="secondary" type="button" loading={uploading} onClick={() => importFileRef.current?.click()}>
+              Choose file
+            </Button>
+            <input ref={importFileRef} type="file" accept=".csv,.xlsx" className="hidden" onChange={onImportFile} />
+          </div>
+          <p className="mt-3 text-center font-mono text-[11px] uppercase tracking-wide text-ink-faint">or paste</p>
+          <form onSubmit={bulkImport} className="mt-3 space-y-4">
             <div>
               <Label htmlFor="kb-csv">One entry per line: question,answer</Label>
               <Textarea

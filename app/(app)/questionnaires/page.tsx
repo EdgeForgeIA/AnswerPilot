@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { FileSpreadsheet, Plus } from "lucide-react";
 import { getOrgContext } from "@/lib/data";
 import { formatDate } from "@/lib/utils";
+import { DeleteQuestionnaireButton } from "@/components/delete-questionnaire-button";
 import { Card, EmptyState, StatusBadge } from "@/components/ui";
 import type { Questionnaire } from "@/types/db";
 
@@ -53,20 +54,26 @@ export default async function QuestionnairesPage() {
         ) : (
           <Card className="divide-y divide-line">
             {questionnaires.map((q) => (
-              <Link
+              <div
                 key={q.id}
-                href={`/questionnaires/${q.id}`}
                 className="flex items-center justify-between gap-4 px-5 py-4 hover:bg-raised"
               >
-                <div className="min-w-0">
+                <Link href={`/questionnaires/${q.id}`} className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-ink">{q.name}</p>
                   <p className="mt-0.5 font-mono text-xs text-ink-faint">
                     {q.question_count} questions · {formatDate(q.created_at)}
                     {q.requester ? ` · for ${q.requester}` : ""}
                   </p>
+                </Link>
+                <div className="flex shrink-0 items-center gap-3">
+                  <StatusBadge status={q.status} />
+                  <DeleteQuestionnaireButton
+                    id={q.id}
+                    name={q.name}
+                    questionCount={q.question_count}
+                  />
                 </div>
-                <StatusBadge status={q.status} />
-              </Link>
+              </div>
             ))}
           </Card>
         )}

@@ -97,6 +97,23 @@ export function ReviewWorkspace({ questionnaireId, initialQuestions, kbEntries }
     setQuestions((prev) => prev.map((q) => (q.id === updated.id ? updated : q)));
   }
 
+  // Send-guard: the customer-facing export should only contain reviewed
+  // answers. Warn (but allow) if anything is unapproved or still a gap.
+  function exportFinal() {
+    const unapproved = questions.filter((q) => q.status !== "approved").length;
+    const gaps = questions.filter((q) => (q.final_answer ?? "").includes("[NEEDS INPUT")).length;
+    if (unapproved > 0 || gaps > 0) {
+      const parts: string[] = [];
+      if (unapproved > 0) parts.push(`${unapproved} answer${unapproved === 1 ? " isn't" : "s aren't"} approved yet`);
+      if (gaps > 0) parts.push(`${gaps} still contain${gaps === 1 ? "s" : ""} [NEEDS INPUT] gaps`);
+      const ok = window.confirm(
+        `${parts.join(" and ")}.\n\nA customer-facing export should normally contain only reviewed answers. Export anyway?`
+      );
+      if (!ok) return;
+    }
+    window.location.href = `/api/questionnaires/${questionnaireId}/export?format=xlsx&mode=final`;
+  }
+
   return (
     <div className="mt-6">
       {/* Toolbar */}
@@ -130,15 +147,23 @@ export function ReviewWorkspace({ questionnaireId, initialQuestions, kbEntries }
               <Sparkles className="h-3.5 w-3.5" aria-hidden /> Draft {pendingCount} pending
             </Button>
           )}
-          <a
-            href={`/api/questionnaires/${questionnaireId}/export?format=xlsx`}
-            className="inline-flex h-8 items-center gap-2 rounded-lg border border-line-strong bg-surface px-3 text-[13px] font-medium text-ink hover:bg-raised"
+          <button
+            onClick={exportFinal}
+            className="inline-flex h-8 items-center gap-2 rounded-lg bg-ink px-3 text-[13px] font-medium text-canvas hover:opacity-90"
           >
-            <Download className="h-3.5 w-3.5" aria-hidden /> Export XLSX
+            <Download className="h-3.5 w-3.5" aria-hidden /> Export for customer
+          </button>
+          <a
+            href={`/api/questionnaires/${questionnaireId}/export?format=xlsx&mode=review`}
+            className="inline-flex h-8 items-center rounded-lg border border-line-strong bg-surface px-3 text-[13px] font-medium text-ink hover:bg-raised"
+            title="Internal copy with confidence grades and review status"
+          >
+            Review copy
           </a>
           <a
             href={`/api/questionnaires/${questionnaireId}/export`}
             className="inline-flex h-8 items-center rounded-lg border border-line-strong bg-surface px-3 text-[13px] font-medium text-ink hover:bg-raised"
+            title="Internal CSV with review metadata"
           >
             CSV
           </a>
@@ -205,7 +230,7 @@ function QuestionRow({
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(question.final_answer ?? "");
-  const [busy, setBusy] = useState<"approve" | "save" | null>(null);
+  const [busy, setBusy] = useState<"approve" | "save" | "regen" | null>(null);
   const [showSources, setShowSources] = useState(false);
 
   const sources = question.source_ids
@@ -239,6 +264,19 @@ function QuestionRow({
       setEditing(false);
       toast.success("Approved and saved to your library.");
     }
+  }
+
+  async function regenerate() {
+    setBusy("regen");
+    const res = await fetch(`/api/answers/${question.id}/regenerate`, { method: "POST" });
+    const payload = await res.json().catch(() => ({}));
+    setBusy(null);
+    if (!res.ok) {
+      toast.error(payload.error ?? "Could not regenerate.");
+      return;
+    }
+    onUpdated(payload.question as Question);
+    toast.success("Redrafted from your current library.");
   }
 
   async function saveEdit() {
@@ -355,6 +393,11 @@ function QuestionRow({
                 <Button size="sm" variant="secondary" onClick={() => setEditing(true)}>
                   <Pencil className="h-3.5 w-3.5" aria-hidden /> Edit
                 </Button>
+                {!isApproved && (
+                  <Button size="sm" variant="ghost" onClick={regenerate} loading={busy === "regen"}>
+                    <RefreshCw className="h-3.5 w-3.5" aria-hidden /> Regenerate
+                  </Button>
+                )}
               </div>
             )}
           </div>
