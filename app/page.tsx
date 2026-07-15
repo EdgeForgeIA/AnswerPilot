@@ -5,7 +5,7 @@ import {
   Check,
   FileDown,
   Radar,
-  ShieldCheck,
+  PenTool,
   Sparkles,
   Timer,
 } from "lucide-react";
@@ -35,9 +35,9 @@ function Wordmark() {
   return (
     <Link href="/" className="flex items-center gap-2">
       <span className="flex h-7 w-7 items-center justify-center rounded-md bg-accent text-on-accent">
-        <ShieldCheck className="h-4 w-4" aria-hidden />
+        <PenTool className="h-4 w-4" aria-hidden />
       </span>
-      <span className="text-[15px] font-semibold tracking-tight text-ink">AnswerPilot</span>
+      <span className="text-[15px] font-semibold tracking-tight text-ink">VeriQuill</span>
     </Link>
   );
 }
@@ -120,7 +120,7 @@ function Hero() {
             <span className="text-accent">answered before lunch.</span>
           </h1>
           <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-ink-soft">
-            AnswerPilot drafts every answer from your own approved answer library — cited,
+            VeriQuill drafts every answer from your own approved answer library — cited,
             confidence-graded, and never invented. You review, approve, and export. Deals stop
             dying in procurement.
           </p>
@@ -215,7 +215,7 @@ const STEPS = [
   },
   {
     title: "Paste in any questionnaire",
-    body: "Upload the .xlsx file the customer sent — AnswerPilot finds the question column automatically — or paste questions in directly. Every answer is drafted from your library, with citations and a confidence grade on each row.",
+    body: "Upload the .xlsx file the customer sent — VeriQuill finds the question column automatically — or paste questions in directly. Every answer is drafted from your library, with citations and a confidence grade on each row.",
   },
   {
     title: "Review, approve, export",
@@ -232,7 +232,7 @@ function HowItWorks() {
           A workflow, not a chatbot
         </h2>
         <p className="mt-3 max-w-2xl text-ink-soft">
-          Generic AI invents certifications you don&apos;t have. AnswerPilot only answers from
+          Generic AI invents certifications you don&apos;t have. VeriQuill only answers from
           what your team has approved — and tells you when it can&apos;t.
         </p>
         <ol className="mt-12 grid gap-10 md:grid-cols-3">
@@ -280,7 +280,7 @@ const FEATURES = [
     body: "Upload the customer's .xlsx questionnaire directly, and export a clean, review-ready .xlsx or CSV to send back or paste into their portal.",
   },
   {
-    icon: ShieldCheck,
+    icon: PenTool,
     title: "Your data stays yours",
     body: "Row-level security isolates every workspace. Your library is never used to answer anyone else's questionnaires.",
   },
@@ -453,7 +453,7 @@ function SiteFooter() {
           </Link>
         </nav>
         <p className="font-mono text-xs text-ink-faint">
-          © {new Date().getFullYear()} AnswerPilot · Security questionnaires, answered.
+          © {new Date().getFullYear()} VeriQuill · Security questionnaires, answered.
         </p>
       </div>
     </footer>

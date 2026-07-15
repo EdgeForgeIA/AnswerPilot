@@ -101,7 +101,7 @@ async function buildWorkbook(
   }
 
   // Review copy: full metadata for internal use.
-  workbook.creator = "AnswerPilot";
+  workbook.creator = "VeriQuill";
   sheet.columns = [
     { header: "#", key: "n", width: 6 },
     { header: "Question", key: "question", width: 60 },

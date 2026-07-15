@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
+import { PenTool } from "lucide-react";
 
 export default function LegalLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,9 +8,9 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
         <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2 font-semibold text-ink">
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent text-on-accent">
-              <ShieldCheck className="h-4 w-4" aria-hidden />
+              <PenTool className="h-4 w-4" aria-hidden />
             </span>
-            AnswerPilot
+            VeriQuill
           </Link>
           <Link href="/" className="text-sm font-medium text-ink-soft hover:text-ink">
             Back to home

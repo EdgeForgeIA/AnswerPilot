@@ -4,25 +4,25 @@ import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const description =
-  "AnswerPilot drafts accurate, cited answers to security questionnaires from your own approved answer library, so deals stop stalling in vendor review.";
+  "VeriQuill drafts accurate, cited answers to security questionnaires from your own approved answer library, so deals stop stalling in vendor review.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "AnswerPilot — Security questionnaires, answered in minutes",
-    template: "%s · AnswerPilot",
+    default: "VeriQuill — Security questionnaires, answered in minutes",
+    template: "%s · VeriQuill",
   },
   description,
   openGraph: {
-    title: "AnswerPilot — Security questionnaires, answered in minutes",
+    title: "VeriQuill — Security questionnaires, answered in minutes",
     description,
     url: siteUrl,
-    siteName: "AnswerPilot",
+    siteName: "VeriQuill",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AnswerPilot — Security questionnaires, answered in minutes",
+    title: "VeriQuill — Security questionnaires, answered in minutes",
     description,
   },
   robots: { index: true, follow: true },

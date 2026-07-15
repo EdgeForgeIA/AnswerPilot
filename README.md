@@ -1,6 +1,6 @@
-# AnswerPilot
+# VeriQuill
 
-**Security questionnaires, answered in minutes.** AnswerPilot drafts accurate, cited answers to security questionnaires (SOC 2, SIG Lite, CAIQ, vendor risk reviews, RFP security sections) from your company's own approved answer library — then routes every draft through human review before export.
+**Security questionnaires, answered in minutes.** VeriQuill drafts accurate, cited answers to security questionnaires (SOC 2, SIG Lite, CAIQ, vendor risk reviews, RFP security sections) from your company's own approved answer library — then routes every draft through human review before export.
 
 Every draft is grounded exclusively in your library, graded `high / medium / low` confidence, and cites its sources. Anything the library can't support comes back as an explicit `[NEEDS INPUT: …]` gap instead of a confident hallucination. Approving an answer saves it back to the library, so questionnaire #10 is mostly done before you start.
 
@@ -18,7 +18,7 @@ No ORM: the schema lives in `supabase/migrations/0001_init.sql` and queries go t
 ## 1 — Local setup
 
 ```bash
-git clone <this repo> && cd answerpilot
+git clone <this repo> && cd veriquill
 npm install
 cp .env.example .env.local
 ```
@@ -40,8 +40,8 @@ Now fill in `.env.local` by completing steps 2–4.
 
 1. Grab your test secret key from [dashboard.stripe.com/test/apikeys](https://dashboard.stripe.com/test/apikeys) → `STRIPE_SECRET_KEY`.
 2. **Product catalog → Add product**, twice:
-   - `AnswerPilot Pro` — recurring, $149/month → copy the price ID → `STRIPE_PRICE_PRO`
-   - `AnswerPilot Scale` — recurring, $399/month → copy the price ID → `STRIPE_PRICE_SCALE`
+   - `VeriQuill Pro` — recurring, $149/month → copy the price ID → `STRIPE_PRICE_PRO`
+   - `VeriQuill Scale` — recurring, $399/month → copy the price ID → `STRIPE_PRICE_SCALE`
 3. Forward webhooks locally with the [Stripe CLI](https://stripe.com/docs/stripe-cli):
 
    ```bash

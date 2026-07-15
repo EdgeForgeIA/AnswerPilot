@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookMarked, FileSpreadsheet, LayoutDashboard, Settings, ShieldCheck } from "lucide-react";
+import { BookMarked, FileSpreadsheet, LayoutDashboard, Settings, PenTool } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const LINKS = [
@@ -19,9 +19,9 @@ export function AppNav({ orgName, planName }: { orgName: string; planName: strin
     <aside className="flex w-full shrink-0 flex-col border-b border-line bg-surface md:min-h-screen md:w-60 md:border-b-0 md:border-r">
       <div className="flex items-center gap-2 px-5 py-5">
         <span className="flex h-7 w-7 items-center justify-center rounded-md bg-accent text-on-accent">
-          <ShieldCheck className="h-4 w-4" aria-hidden />
+          <PenTool className="h-4 w-4" aria-hidden />
         </span>
-        <span className="text-[15px] font-semibold tracking-tight text-ink">AnswerPilot</span>
+        <span className="text-[15px] font-semibold tracking-tight text-ink">VeriQuill</span>
       </div>
 
       <nav className="flex gap-1 overflow-x-auto px-3 pb-3 md:flex-col md:pb-0">

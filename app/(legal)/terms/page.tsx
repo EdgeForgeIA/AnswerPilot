@@ -14,18 +14,18 @@ export default function TermsPage() {
   return (
     <>
       <h1>Terms of Service</h1>
-      <p className="updated">Last updated: <Ph>DATE</Ph></p>
+      <p className="updated">Last updated: July 15, 2026</p>
 
       <p>
-        These Terms of Service (&ldquo;Terms&rdquo;) govern your use of AnswerPilot (the
-        &ldquo;Service&rdquo;), operated by <Ph>LEGAL ENTITY NAME</Ph> (&ldquo;we&rdquo;,
+        These Terms of Service (&ldquo;Terms&rdquo;) govern your use of VeriQuill (the
+        &ldquo;Service&rdquo;), operated by VeriQuill LLC (&ldquo;we&rdquo;,
         &ldquo;us&rdquo;). By creating an account or using the Service, you agree to these Terms
         on behalf of yourself and, if applicable, the organization you represent.
       </p>
 
       <h2>1. The Service</h2>
       <p>
-        AnswerPilot helps you draft responses to security questionnaires using an answer library
+        VeriQuill helps you draft responses to security questionnaires using an answer library
         that you provide and control. Drafts are generated from your library content and are
         clearly marked with confidence levels and gaps.
       </p>
@@ -71,7 +71,7 @@ export default function TermsPage() {
       <p>
         We aim for high availability but the Service is provided &ldquo;as is&rdquo; and
         &ldquo;as available&rdquo; without warranties of any kind. Support is provided by email at{" "}
-        <Ph>SUPPORT EMAIL</Ph> according to your plan.
+        support@veriquill.app according to your plan.
       </p>
 
       <h2>7. Limitation of liability</h2>
@@ -86,7 +86,7 @@ export default function TermsPage() {
       <p>
         You may stop using the Service and delete your account at any time. We may suspend or
         terminate accounts that violate these Terms. Upon termination we will delete your content
-        within <Ph>30</Ph> days, except as required for legal compliance.
+        within 30 days, except as required for legal compliance.
       </p>
 
       <h2>9. Changes to these Terms</h2>
@@ -98,8 +98,8 @@ export default function TermsPage() {
 
       <h2>10. Governing law</h2>
       <p>
-        These Terms are governed by the laws of <Ph>STATE / COUNTRY</Ph>, without regard to
-        conflict-of-law rules. Contact: <Ph>LEGAL CONTACT EMAIL</Ph>.
+        These Terms are governed by the laws of Illinois, USA, without regard to
+        conflict-of-law rules. Contact: support@veriquill.app.
       </p>
     </>
   );

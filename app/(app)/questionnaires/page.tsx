@@ -41,7 +41,7 @@ export default async function QuestionnairesPage() {
           <EmptyState
             icon={<FileSpreadsheet className="h-8 w-8" aria-hidden />}
             title="No questionnaires yet"
-            description="Paste in the questions from that spreadsheet a customer sent you, and AnswerPilot will draft every answer from your library."
+            description="Paste in the questions from that spreadsheet a customer sent you, and VeriQuill will draft every answer from your library."
             action={
               <Link
                 href="/questionnaires/new"

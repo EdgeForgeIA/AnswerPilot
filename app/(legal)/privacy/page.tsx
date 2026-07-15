@@ -14,10 +14,10 @@ export default function PrivacyPage() {
   return (
     <>
       <h1>Privacy Policy</h1>
-      <p className="updated">Last updated: <Ph>DATE</Ph></p>
+      <p className="updated">Last updated: July 15, 2026</p>
 
       <p>
-        This policy explains what data AnswerPilot (operated by <Ph>LEGAL ENTITY NAME</Ph>)
+        This policy explains what data VeriQuill (operated by VeriQuill LLC)
         collects, how we use it, and the choices you have. The short version: we collect what we
         need to run the product, your questionnaire content stays yours, and we never use it to
         answer anyone else&rsquo;s questionnaires or to train AI models.
@@ -59,14 +59,14 @@ export default function PrivacyPage() {
         <li><strong>Vercel</strong> — application hosting and delivery.</li>
         <li><strong>Anthropic</strong> — AI draft generation (API; no training on your data by default).</li>
         <li><strong>Stripe</strong> — payment processing.</li>
-        <li><Ph>VOYAGE AI — semantic search embeddings (only if enabled)</Ph></li>
-        <li><Ph>EMAIL PROVIDER, ANALYTICS — add if/when used</Ph></li>
+        <li><strong>Voyage AI</strong> — semantic search embeddings</li>
+        <li><strong>Resend</strong> — transactional email delivery</li>
       </ul>
 
       <h2>4. Retention and deletion</h2>
       <p>
         Your content is retained while your account is active. If you delete your account or
-        request deletion at <Ph>PRIVACY EMAIL</Ph>, we delete your content within <Ph>30</Ph>{" "}
+        request deletion at support@veriquill.app, we delete your content within 30{" "}
         days, except minimal records required for tax and legal compliance.
       </p>
 
@@ -74,7 +74,7 @@ export default function PrivacyPage() {
       <p>
         Depending on your location, you may have rights to access, correct, export, or delete
         your personal data, and to object to certain processing. Contact{" "}
-        <Ph>PRIVACY EMAIL</Ph> and we will respond within 30 days.
+        support@veriquill.app and we will respond within 30 days.
       </p>
 
       <h2>6. Security</h2>
@@ -96,7 +96,7 @@ export default function PrivacyPage() {
 
       <h2>9. Contact</h2>
       <p>
-        <Ph>LEGAL ENTITY NAME</Ph> · <Ph>ADDRESS</Ph> · <Ph>PRIVACY EMAIL</Ph>
+        VeriQuill LLC · <Ph>ADDRESS</Ph> · support@veriquill.app
       </p>
     </>
   );
