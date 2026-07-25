@@ -74,6 +74,19 @@ Three layers, all deliberate — preserve them:
 
 `app/api/stripe/webhook/route.ts` throws (→ 500, Stripe retries and shows a failed delivery) when an *active* subscription carries an unrecognized price ID, or when the DB update errors or matches zero rows. Returning 200 in those cases would silently downgrade a paying customer. Don't "fix" these into soft failures.
 
+### The blog is file-backed and fails the build on bad content
+
+`content/blog/*.md` (`.mdx` accepted, parsed identically) → `lib/blog.ts` → `/blog` and `/blog/[slug]`. Frontmatter (`title`, `description`, `slug`, `date`) is validated with zod and **throws** on anything invalid — missing fields, a non-kebab slug, an unreal date, an empty body, or a duplicate slug. That's deliberate: a bad post should break the build, not ship with an empty `<title>` or a dead URL. The frontmatter `slug` is authoritative for the URL; filenames may differ.
+
+Two things to know before editing:
+
+- Rendering is **markdown only** (`marked`, GFM). JSX inside an `.mdx` file will render as literal text — there is no MDX compiler wired up.
+- Date-only frontmatter is treated as UTC end to end (`formatPostDate`), so a post dated the 20th never displays as the 19th. Don't route blog dates through `lib/utils.ts::formatDate`, which is local-time and meant for DB timestamps.
+
+Declaring an `openGraph` block in a page's metadata opts that page out of inheriting the root `app/opengraph-image.tsx` card, so blog metadata references it explicitly via `SITE_OG_IMAGE` in `lib/site.ts`. Any new page that sets its own `openGraph` needs the same treatment or it ships an imageless social card.
+
+`app/sitemap.ts` calls `getAllPosts()`, so new posts appear in the sitemap with no extra step.
+
 ## Styling
 
 Tailwind v4, CSS-first config — no `tailwind.config.js`. Semantic design tokens live in `app/globals.css` under `:root`, are redefined in a `prefers-color-scheme: dark` block, and are mapped to utilities via `@theme inline`. So dark mode is automatic: use `bg-surface`, `text-ink`, `text-ink-soft`, `border-line`, `bg-accent`, `text-on-accent`, `shadow-card` etc. **Never hardcode hex colors or use raw Tailwind palette classes** (`bg-white`, `text-gray-500`) — they break dark mode.

@@ -60,6 +60,9 @@ function SiteNav() {
           <a href="#faq" className="hover:text-ink">
             FAQ
           </a>
+          <Link href="/blog" className="hover:text-ink">
+            Blog
+          </Link>
         </nav>
         <div className="flex items-center gap-2">
           <Link
@@ -445,6 +448,9 @@ function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 sm:flex-row">
         <Wordmark />
         <nav className="flex items-center gap-5 text-xs font-medium text-ink-faint">
+          <Link href="/blog" className="hover:text-ink">
+            Blog
+          </Link>
           <Link href="/terms" className="hover:text-ink">
             Terms
           </Link>
