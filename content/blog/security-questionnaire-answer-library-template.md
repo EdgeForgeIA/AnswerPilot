@@ -54,4 +54,6 @@ A library only compounds if updating it is part of the workflow, not an extra ch
 
 Build this in a spreadsheet this week, the structure above is everything you need and it takes about 20 minutes to set up. Then let it compound.
 
+You don't have to start from a blank sheet. Here's mine: [the gold answer library template](/gold-answer-library-template.xlsx), free, no email required. All four fields are already columns, there's a mentions column for the vendor filtering trick above, and there's a subprocessors tab, since that's where staleness usually starts.
+
 And if you'd rather not maintain the spreadsheet by hand, this library structure is exactly what VeriQuill automates. Upload the questionnaire a customer sent, it drafts from your approved library, cites the source on every answer, and flags what your documents can't support instead of guessing. Anything you approve grows the library automatically. First questionnaire free: [veriquill.app](https://veriquill.app)
