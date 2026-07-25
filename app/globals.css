@@ -9,7 +9,8 @@
   --line-strong: #cfd6de;
   --ink: #10151f;
   --ink-soft: #5b6472;
-  --ink-faint: #8a93a1;
+  /* AA (4.5:1) against every surface it sits on; worst case is --canvas at 4.61:1. */
+  --ink-faint: #677080;
   --accent: #0b7a6b;
   --accent-strong: #085e53;
   --accent-soft: #e0f2ee;
@@ -30,7 +31,8 @@
     --line-strong: #313b4b;
     --ink: #edf1f6;
     --ink-soft: #97a1b0;
-    --ink-faint: #6a7484;
+    /* AA (4.5:1) against every surface it sits on; worst case is --surface-raised at 4.64:1. */
+    --ink-faint: #7c8696;
     --accent: #2fbba4;
     --accent-strong: #4bd0ba;
     --accent-soft: #123029;
