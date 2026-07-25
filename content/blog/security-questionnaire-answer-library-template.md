@@ -2,7 +2,7 @@
 title: "The Gold Answer Library: Why Questionnaire #10 Should Take 2 Hours, Not 20"
 description: "A practical template for building a reusable security questionnaire answer library, with the four metadata fields that keep reused answers from going stale or landing in the wrong context."
 slug: "security-questionnaire-answer-library-template"
-date: "2026-07-25"
+date: "2026-07-26"
 ---
 
 Every team that answers security questionnaires says the same thing: "we should really be reusing these answers." Almost nobody actually does it. So every questionnaire costs like the first one: 15 to 30 hours of hunting through policies, old spreadsheets, your SOC 2 report, and the memory of whoever answered last time.
