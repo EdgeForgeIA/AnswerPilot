@@ -87,6 +87,12 @@ Declaring an `openGraph` block in a page's metadata opts that page out of inheri
 
 `app/sitemap.ts` calls `getAllPosts()`, so new posts appear in the sitemap with no extra step.
 
+### Icons are generated, not hand-drawn
+
+`app/favicon.ico`, `app/icon.png`, and `app/apple-icon.png` are build products of `scripts/generate-icons.js` — edit that script and re-run it (`node scripts/generate-icons.js`, or add `--preview` for magnified blow-ups), don't touch the binaries. It needs `sharp`, which arrives transitively via `next`, so a plain `npm install` is enough. Output is deterministic byte for byte on a given sharp version.
+
+The 16×16 entry in the `.ico` is intentionally a *different drawing* from the other sizes: the stroked lucide mark is illegible at 16px, so that size uses a simplified filled nib. Sizes are optically tuned (smaller canvas → larger glyph, heavier stroke) rather than one artwork scaled down. The script's header documents the reasoning; `--preview` renders the rejected 16px variant alongside the shipped one.
+
 ## Styling
 
 Tailwind v4, CSS-first config — no `tailwind.config.js`. Semantic design tokens live in `app/globals.css` under `:root`, are redefined in a `prefers-color-scheme: dark` block, and are mapped to utilities via `@theme inline`. So dark mode is automatic: use `bg-surface`, `text-ink`, `text-ink-soft`, `border-line`, `bg-accent`, `text-on-accent`, `shadow-card` etc. **Never hardcode hex colors or use raw Tailwind palette classes** (`bg-white`, `text-gray-500`) — they break dark mode.
